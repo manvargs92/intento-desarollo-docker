@@ -1,0 +1,24 @@
+# No es necesario asignarle una red ya que Docker Compose creará una para uso exclusivo de los contenedores
+version: "3.9"
+services:
+  chanchito:
+    build: . # ruta en dónde se va a crear la imagen de la aplicación
+    ports:
+      - "3000:3000"
+    links:
+      - monguito
+  monguito:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=manvargs
+      - MONGO_INITDB_ROOT_PASSWORD=Mexico123
+
+    volumes: # indicar al contenedor (monguito) cuáles son los volúmenes que éste va autilizar; solo se puede indicar los que se hayan indicado en la segunda etiqueta "volumes"
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+
+volumes: # definir todos los volúmenes que van a utilizar los contenedores
+  mongo-data: # no es necesario poner nada más

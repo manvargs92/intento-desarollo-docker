@@ -1,0 +1,7 @@
+services:
+  prueba-springboot-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8081:8081"

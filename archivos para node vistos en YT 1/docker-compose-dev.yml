@@ -1,0 +1,26 @@
+version: "3.9" # versión de Docker Compose
+services: # aquí van los contenedores
+  chanchito: # nombre del contenedor
+    build:
+      context: . # indica a docker compose dónde se encuentra la aplicación en el cual él va a estar trabajando
+      dockerfile: Dockerfile.dev # indica el Dockerfile en base al cual debe construir la imagen de la aplicación
+    ports: # puertos que se van a habilitar
+      - "3000:3000"
+    links: # nombres de los contenedores con los que se conectará la aplición
+      - monguito
+    volumes: # indica que debe usar un volumen
+      - .:/home/app # ruta-actual:ruta-destino-contenedor
+  monguito:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=manvargs
+      - MONGO_INITDB_ROOT_PASSWORD=Mexico123
+    volumes:
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+
+volumes:
+  mongo-data:
